@@ -51,21 +51,51 @@ public class TP2App extends Application {
   private void prepareBoutons() {
     ajouteTout.setOnAction(this::onAjouteTout);
     retireTout.setOnAction(this::onRetireTout);
+    versDroite.setOnAction(this::onVersDroite);
+    versGauche.setOnAction(this::onVersGauche);
+    
+    
+    
     // TODO actions des deux boutons centraux
   }
 
+  private void onVersDroite(ActionEvent actionEvent) {
+	  int index = gauche.getSelectionModel().getSelectedIndex();
+	  if(index != -1) {
+		  String element = gauche.getItems().remove(index);
+		  droite.getItems().add(element);
+		  gauche.getSelectionModel().clearSelection();
+	  }
+  }
+  
+  private void onVersGauche(ActionEvent actionEvent) {
+	  int index = droite.getSelectionModel().getSelectedIndex();
+	  if(index != -1) {
+		  String element = droite.getItems().remove(index);
+		  gauche.getItems().add(element);
+		  droite.getSelectionModel().clearSelection();
+	  }
+  }
+  
+  
   /** Ajoute tous les éléments de gauche dans la liste de droite
    Active le bouton "Retirer tout" et désactive le bouton "Ajouter tout" */
   private void onAjouteTout(ActionEvent actionEvent) {
     droite.getItems().addAll(gauche.getItems());
     gauche.getItems().clear();
-    //TODO active/désactive les boutons
+    
+	   ajouteTout.setDisable(true);
+	   retireTout.setDisable(false);
   }
 
   /** Ajoute tous les éléments de droite dans la liste de gauche
    Active le bouton "Ajouter tout" et désactive le bouton "Retirer tout" */
   private void onRetireTout(ActionEvent actionEvent) {
-    //TODO
+	   gauche.getItems().addAll(droite.getItems());
+	   droite.getItems().clear();
+	   
+	   ajouteTout.setDisable(false);
+	   retireTout.setDisable(true);
   }
 
   /** Prépare les menus et leurs événements */
@@ -94,7 +124,14 @@ public class TP2App extends Application {
    Active le bouton "Ajouter tout"
    */
   private void prepareListe() {
-    //TODO active le bouton "Ajouter tout"
+	  gauche.getItems().addAll(
+			"Bob",
+			"Patrice",
+			"Stéphanie"
+		);
+	  
+	  ajouteTout.setDisable(false);
+	  
   }
 
   private void extraitIds(Scene scene) {
