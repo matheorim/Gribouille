@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TP2App extends Application {
 
@@ -43,7 +44,14 @@ public class TP2App extends Application {
   /** Prépare la fenêtre pour demander confirmation avant fermeture */
   private void prepareFermeture(Stage stage) {
     stage.setOnCloseRequest(event -> {
-      //TODO confirmer ou consommer l'événement
+    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez vous vraiment fermer la page", ButtonType.YES , ButtonType.NO);
+    	alert.setTitle("Quitter");
+    	
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	if (result.orElse(ButtonType.NO) != ButtonType.YES) {
+    		event.consume();
+    	}
     });
   }
 
@@ -54,9 +62,6 @@ public class TP2App extends Application {
     versDroite.setOnAction(this::onVersDroite);
     versGauche.setOnAction(this::onVersGauche);
     
-    
-    
-    // TODO actions des deux boutons centraux
   }
 
   private void onVersDroite(ActionEvent actionEvent) {
