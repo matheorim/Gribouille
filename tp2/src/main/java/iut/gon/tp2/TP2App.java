@@ -70,7 +70,23 @@ public class TP2App extends Application {
 
   /** Prépare les menus et leurs événements */
   private void prepareMenus(MenuBar menus) {
-    //TODO Remplir la barre de menus
+	Menu menuFichiers = new Menu("_Fichiers");
+	Menu menuAide = new Menu("_Aide");
+			
+    menus.getMenus().addAll(menuFichiers, menuAide);
+    
+    MenuItem itemQuitter = new MenuItem("Quitter");
+    MenuItem itemAPropos = new MenuItem("A propos");
+    
+    menuFichiers.getItems().add(itemQuitter);
+    menuAide.getItems().add(itemAPropos);
+    
+    itemQuitter.setOnAction(e -> Platform.exit());
+    itemAPropos.setOnAction(e -> {
+    	Alert alert = new Alert(Alert.AlertType.NONE, "Fait par …vous !", ButtonType.CLOSE);
+    	alert.setTitle("A propos");
+    	alert.show();
+    });
   }
 
   /**
