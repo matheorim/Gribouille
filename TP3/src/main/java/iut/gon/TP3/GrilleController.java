@@ -24,13 +24,14 @@ public class GrilleController implements Initializable{
 		
 		for (int lg = 0; lg < 3; lg++) {
 			for (int col = 0; col < 3; col++) {
-				Label label = new Label(modele.getCase(lg,col));
+				Label label = new Label();
+				label.textProperty().bind(modele.getCase(lg, col));
 				label.setMaxSize(1000, 1000);
 				label.setAlignment(javafx.geometry.Pos.CENTER);
 				final int lgFinal = lg;
 				final int colFinal = col;
 				label.setOnMouseClicked(event -> {
-					label.setText("bonjour");
+					//label.setText("bonjour"); bloque le clicksouris
 					modele.setCase(lgFinal, colFinal, "bonjour");
 				});
 				labels[lg][col] = label;
