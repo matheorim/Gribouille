@@ -71,9 +71,33 @@ public class GrilleController implements Initializable {
   }
 
   private void onGagne(String joueur) {
-    //TODO demander le nom du joueur
-    //TODO modifier scores
-    //TODO appeler la table des scores
+	  String nomJoueur = null;
+	  if (joueur != null) {
+		  TextInputDialog dialog = new TextInputDialog();
+		  dialog.setTitle("Partie terminée");
+		  dialog.setHeaderText("Le joueur" + joueur + " a gagné !");
+		  dialog.setContentText("Entrez votre nom ;");
+		  Optional<String> result = dialog.showAndWait();
+		  if (result.isPresent() && !result.get().isEmpty()) {
+			  nomJoueur = result.get();
+		  } else {
+			  nomJoueur = "Anonyme";
+		  }
+	  }
+	  if(joueur != null) {
+		  table.ajouteVictoire(nomJoueur);
+	  } else {
+		  table.ajouteNulle();
+	  }
+	  try {
+		  FXMLLoader loader = new FXMLLoader(getClass().getResource("table.fxml"));
+		  Parent tableRoot = loader.load();
+		  TableController tableController = loader.getController();
+		  tableController.setScores(table);
+		  grille.getScene().setRoot(tableRoot);
+	  } catch (IOException e) {
+		  e.printStackTrace();
+	  }
   }
 
   @FXML
