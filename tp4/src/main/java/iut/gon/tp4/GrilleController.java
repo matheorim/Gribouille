@@ -50,8 +50,12 @@ public class GrilleController implements Initializable {
         label.setMaxSize(1000,1000);
         label.setAlignment(Pos.CENTER);
         label.setFont(Font.font(24));
+        
       }
     joueur.textProperty().bind(modele.texteJoueur);
+    if(menuController != null) {
+    	menuController.setParams(modele, table);
+    }
   }
 
   public void joueCase(int lg, int col) {
@@ -101,25 +105,6 @@ public class GrilleController implements Initializable {
   }
 
   @FXML
-  public void onMenuNouvelle(ActionEvent evt) {
-    modele.nouvellePartie();
-  }
-  @FXML
-  public void onMenuTable(ActionEvent evt) {
-	  try {
-		  FXMLLoader loader = new FXMLLoader(getClass().getResource("table.fxml"));
-		  Parent tableRoot = loader.load();
-		  TableController tableController = loader.getController();
-		  tableController.setScores(table);
-		  grille.getScene().setRoot(tableRoot);
-	  } catch (IOException e) {
-		  e.printStackTrace();
-	  }
-
-  }
-
-  @FXML
-  public void onMenuQuitter(ActionEvent evt) {
-    Platform.exit();
-  }
+  private MenusController menuController;
+  
 }
