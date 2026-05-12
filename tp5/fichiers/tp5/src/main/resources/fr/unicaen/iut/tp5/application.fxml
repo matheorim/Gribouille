@@ -9,14 +9,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:controller="fr.unicaen.iut.tp5.ControleurDemineur" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.unicaen.iut.tp5.ControleurDemineur">
 	<top>
-		<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+		<VBox alignment="TOP_CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
 			<children>
 				<MenuBar>
 					<menus>
@@ -25,22 +26,22 @@
 								<MenuItem mnemonicParsing="false" text="Quitter" />
 							</items>
 						</Menu>
-						<Menu mnemonicParsing="false" text="Difficulté">
+						<Menu mnemonicParsing="false" text="Difficulte">
 							<items>
 								<RadioMenuItem mnemonicParsing="false" text="Facile">
 									<toggleGroup>
-										<ToggleGroup fx:id="Difficulté" />
+										<ToggleGroup fx:id="Difficulte" />
 									</toggleGroup>
 									<userData>
 										<String fx:value="10;10;10" />
 									</userData>
 								</RadioMenuItem>
-								<RadioMenuItem mnemonicParsing="false" text="Moyen" toggleGroup="$Difficulté">
+								<RadioMenuItem mnemonicParsing="false" text="Moyen" toggleGroup="$Difficulte">
 									<userData>
 										<String fx:value="20;20;50" />
 									</userData>
 								</RadioMenuItem>
-								<RadioMenuItem mnemonicParsing="false" text="Difficile" toggleGroup="$Difficulté">
+								<RadioMenuItem mnemonicParsing="false" text="Difficile" toggleGroup="$Difficulte">
 									<userData>
 										<String fx:value="30;20;100" />
 									</userData>
@@ -49,16 +50,16 @@
 						</Menu>
 					</menus>
 				</MenuBar>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefWidth="200.0">
                <children>
                   <Label contentDisplay="RIGHT" text="Nombre d'inconnues">
                      <graphic>
-                        <TextField editable="false" focusTraversable="false" fx:id="NbInconnues"/>
+                        <TextField fx:id="NbInconnues" editable="false" focusTraversable="false" />
                      </graphic>
                   </Label>
                   <Label contentDisplay="RIGHT" text="Nombre de marques">
                      <graphic>
-                        <TextField editable="false" focusTraversable="false" fx:id="NbMarques"/>
+                        <TextField fx:id="NbMarques" editable="false" focusTraversable="false" />
                      </graphic>
                   </Label>
                </children>
@@ -68,7 +69,13 @@
 	</top>
    <center>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
-      <GridPane fx:id="GridPaneVue"/>
+      <GridPane fx:id="GridPaneVue" />
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
       </GridPane>
    </center>
 </BorderPane>
