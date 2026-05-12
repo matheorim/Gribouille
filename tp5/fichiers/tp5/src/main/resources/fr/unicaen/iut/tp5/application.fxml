@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+	<top>
+		<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+			<children>
+				<MenuBar>
+					<menus>
+						<Menu mnemonicParsing="false" text="Jeu">
+							<items>
+								<MenuItem mnemonicParsing="false" text="Quitter" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Difficulté">
+							<items>
+								<RadioMenuItem mnemonicParsing="false" text="Facile">
+									<toggleGroup>
+										<ToggleGroup fx:id="Difficulté" />
+									</toggleGroup>
+									<userData>
+										<String fx:value="10;10;10" />
+									</userData>
+								</RadioMenuItem>
+								<RadioMenuItem mnemonicParsing="false" text="Moyen" toggleGroup="$Difficulté">
+									<userData>
+										<String fx:value="20;20;50" />
+									</userData>
+								</RadioMenuItem>
+								<RadioMenuItem mnemonicParsing="false" text="Difficile" toggleGroup="$Difficulté">
+									<userData>
+										<String fx:value="30;20;100" />
+									</userData>
+								</RadioMenuItem>
+							</items>
+						</Menu>
+					</menus>
+				</MenuBar>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label contentDisplay="RIGHT" text="Nombre d'inconnues">
+                     <graphic>
+                        <TextField editable="false" focusTraversable="false" fx:id="NbInconnues"/>
+                     </graphic>
+                  </Label>
+                  <Label contentDisplay="RIGHT" text="Nombre de marques">
+                     <graphic>
+                        <TextField editable="false" focusTraversable="false" fx:id="NbMarques"/>
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+			</children>
+		</VBox>
+	</top>
+   <center>
+      <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+      <GridPane fx:id="GridPaneVue"/>
+      </GridPane>
+   </center>
+</BorderPane>
