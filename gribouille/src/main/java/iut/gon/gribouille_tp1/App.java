@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import iut.gon.gribouille_tp1.modele.Dessin;
 import java.io.IOException;
 
 public class App extends Application {
@@ -13,15 +14,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("CadreGribouille"), 640, 480);
-        stage.setScene(scene);
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("CadreGribouille.fxml"));
+        scene = new Scene(loader.load(), 640, 480);
 
+        Controller controller = loader.getController();
+        controller.setDessin(new Dessin());
+
+        stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
             if (!Dialogues.confirmation()) {
                 event.consume();
             }
         });
-
         stage.show();
     }
 
