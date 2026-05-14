@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import java.net.URL;
@@ -29,9 +30,25 @@ public class Controller implements Initializable {
     @FXML private Rectangle rectNoir;
     @FXML private Rectangle rectBlanc;
 
+    private double prevX;
+    private double prevY;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dessin.widthProperty().bind(pane.widthProperty());
         dessin.heightProperty().bind(pane.heightProperty());
+    }
+
+    @FXML
+    public void onMousePressed(MouseEvent evt) {
+        prevX = evt.getX();
+        prevY = evt.getY();
+    }
+
+    @FXML
+    public void onMouseDragged(MouseEvent evt) {
+        dessin.getGraphicsContext2D().strokeLine(prevX, prevY, evt.getX(), evt.getY());
+        prevX = evt.getX();
+        prevY = evt.getY();
     }
 }
