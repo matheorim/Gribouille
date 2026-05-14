@@ -18,7 +18,10 @@ public class App extends Application {
         scene = new Scene(loader.load(), 640, 480);
 
         Controller controller = loader.getController();
-        controller.setDessin(new Dessin());
+        Dessin monDessin = new Dessin();
+        controller.setDessin(monDessin);
+
+        stage.titleProperty().bind(monDessin.nomDuFichierProperty());
 
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {

@@ -71,7 +71,10 @@
    <center>
       <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Canvas fx:id="dessin" height="253.0" width="322.0" onMousePressed="#onMousePressed" onMouseDragged="#onMouseDragged" />
+            <Canvas fx:id="dessin" height="253.0" width="322.0"
+        onMousePressed="#onMousePressed"
+        onMouseDragged="#onMouseDragged"
+        onMouseMoved="#onMouseMoved" />
          </children>
       </Pane>
    </center>

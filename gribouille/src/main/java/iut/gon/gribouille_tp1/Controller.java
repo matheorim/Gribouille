@@ -3,6 +3,7 @@ package iut.gon.gribouille_tp1;
 import iut.gon.gribouille_tp1.modele.Dessin;
 import iut.gon.gribouille_tp1.modele.Figure;
 import iut.gon.gribouille_tp1.modele.Trace;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -35,8 +36,9 @@ public class Controller implements Initializable {
     @FXML private Rectangle rectNoir;
     @FXML private Rectangle rectBlanc;
 
-    private double prevX;
-    private double prevY;
+    private SimpleDoubleProperty prevX = new SimpleDoubleProperty();
+    private SimpleDoubleProperty prevY = new SimpleDoubleProperty();
+
     private Dessin monDessin;
     private Trace traceEnCours;
 
@@ -48,6 +50,9 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dessin.widthProperty().bind(pane.widthProperty());
         dessin.heightProperty().bind(pane.heightProperty());
+
+        labelX.textProperty().bind(prevX.asString("%.0f"));
+        labelY.textProperty().bind(prevY.asString("%.0f"));
 
         dessin.widthProperty().addListener((obs, oldVal, newVal) -> redessiner());
         dessin.heightProperty().addListener((obs, oldVal, newVal) -> redessiner());
@@ -74,17 +79,23 @@ public class Controller implements Initializable {
 
     @FXML
     public void onMousePressed(MouseEvent evt) {
-        prevX = evt.getX();
-        prevY = evt.getY();
-        traceEnCours = new Trace(1, "black", prevX, prevY);
+        prevX.set(evt.getX());
+        prevY.set(evt.getY());
+        traceEnCours = new Trace(1, "black", prevX.get(), prevY.get());
         monDessin.addFigure(traceEnCours);
     }
 
     @FXML
     public void onMouseDragged(MouseEvent evt) {
-        dessin.getGraphicsContext2D().strokeLine(prevX, prevY, evt.getX(), evt.getY());
+        dessin.getGraphicsContext2D().strokeLine(prevX.get(), prevY.get(), evt.getX(), evt.getY());
         traceEnCours.addPoint(evt.getX(), evt.getY());
-        prevX = evt.getX();
-        prevY = evt.getY();
+        prevX.set(evt.getX());
+        prevY.set(evt.getY());
+    }
+
+    @FXML
+    public void onMouseMoved(MouseEvent evt) {
+        prevX.set(evt.getX());
+        prevY.set(evt.getY());
     }
 }
