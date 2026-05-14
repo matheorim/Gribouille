@@ -1,11 +1,11 @@
 package iut.gon.gribouille_tp1;
 
+import iut.gon.gribouille_tp1.controleurs.Controleur;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import iut.gon.gribouille_tp1.modele.Dessin;
 import java.io.IOException;
 
 public class App extends Application {
@@ -17,12 +17,9 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("CadreGribouille.fxml"));
         scene = new Scene(loader.load(), 640, 480);
 
-        Controller controller = loader.getController();
-        Dessin monDessin = new Dessin();
-        controller.setDessin(monDessin);
+        Controleur controleur = loader.getController();
 
-        stage.titleProperty().bind(monDessin.nomDuFichierProperty());
-
+        stage.titleProperty().bind(controleur.dessin.nomDuFichierProperty());
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
             if (!Dialogues.confirmation()) {
