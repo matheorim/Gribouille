@@ -2,10 +2,14 @@ package fr.iutgon.tp6;
 
 import fr.iutgon.tp6.modele.FabriqueProduits;
 import fr.iutgon.tp6.modele.Ligne;
+import fr.iutgon.tp6.modele.MoneyTableCell;
 import fr.iutgon.tp6.modele.Produit;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.binding.NumberExpression;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableNumberValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +27,7 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
+
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -35,6 +40,7 @@ public class FactureController implements Initializable {
   public TableColumn<Ligne, Number> totalHT;
   public TableColumn<Ligne, Number> totalTTC;
   public TextField sommeFacture;
+  public NumberExpression sommeTotal = new SimpleIntegerProperty(0);
 
   /**
    Called to initialize a controller after its root element has been completely processed.
@@ -98,6 +104,12 @@ public class FactureController implements Initializable {
       totalTTC.setCellValueFactory(
               cellData -> cellData.getValue().totalTTCProperty()
       );
+      sommeFacture.textProperty().bind(
+    	        sommeTotal.asString()   
+    	);
+      prixUnitaire.setCellFactory(MoneyTableCell.forTableColumn());
+      totalHT.setCellFactory(MoneyTableCell.forTableColumn());
+      totalTTC.setCellFactory(MoneyTableCell.forTableColumn());
   }
   
   public void onAjouter(ActionEvent actionEvent) {
@@ -106,5 +118,9 @@ public class FactureController implements Initializable {
 	    int quantite = r.nextInt(10) + 1;
 	    Ligne ligne = new Ligne(quantite, p);
 	    table.getItems().add(ligne);
+	    sommeTotal = Bindings.add(sommeTotal, ligne.totalTTCProperty());
+	      sommeFacture.textProperty().bind(
+	    	        sommeTotal.asString("%.2f")   
+	    	);
   }
 }
