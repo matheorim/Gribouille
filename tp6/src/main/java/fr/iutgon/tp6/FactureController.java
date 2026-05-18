@@ -45,10 +45,32 @@ public class FactureController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    //TODO préparer la table
+      qte.setCellValueFactory(
+              new PropertyValueFactory<>("qte")
+      );
+      produit.setCellValueFactory(
+              cellData -> cellData.getValue().produitProperty()
+      );
+      prixUnitaire.setCellValueFactory(
+              cellData ->
+                      Bindings.selectFloat(
+                              cellData.getValue().produitProperty(),
+                              "prix"
+                      )
+      );
+      totalHT.setCellValueFactory(
+              cellData -> cellData.getValue().totalHTProperty()
+      );
+      totalTTC.setCellValueFactory(
+              cellData -> cellData.getValue().totalTTCProperty()
+      );
   }
-
+  
   public void onAjouter(ActionEvent actionEvent) {
-    //TODO ajouter un produit aléatoire à la table
+	  Random r = new Random();
+	    Produit p = FabriqueProduits.getProduits().getFirst();
+	    int quantite = r.nextInt(10) + 1;
+	    Ligne ligne = new Ligne(quantite, p);
+	    table.getItems().add(ligne);
   }
 }
