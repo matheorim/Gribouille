@@ -45,12 +45,46 @@ public class FactureController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+      table.setEditable(true);
       qte.setCellValueFactory(
               new PropertyValueFactory<>("qte")
       );
+      qte.setCellFactory(
+              TextFieldTableCell.forTableColumn(new IntegerStringConverter())
+      );
+      qte.setOnEditCommit(event -> {
+          Ligne ligne = event.getRowValue();
+          ligne.setQte(event.getNewValue());
+      });
       produit.setCellValueFactory(
               cellData -> cellData.getValue().produitProperty()
       );
+      StringConverter<Produit> converter = new StringConverter<>() {
+          @Override
+          public String toString(Produit p) {
+              return p == null ? "" : p.getNom();
+          }
+          @Override
+          public Produit fromString(String s) {
+              return FabriqueProduits.getProduits()
+                      .stream()
+                      .filter(p -> p.getNom().equals(s))
+                      .findFirst()
+                      .orElse(null);
+          }
+      };
+      produit.setCellFactory(
+              ChoiceBoxTableCell.forTableColumn(
+                      converter,
+                      FXCollections.observableArrayList(
+                              FabriqueProduits.getProduits()
+                      )
+              )
+      );
+      produit.setOnEditCommit(event -> {
+          Ligne ligne = event.getRowValue();
+          ligne.setProduit(event.getNewValue());
+      });
       prixUnitaire.setCellValueFactory(
               cellData ->
                       Bindings.selectFloat(
