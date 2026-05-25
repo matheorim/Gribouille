@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
+import javafx.application.Platform;
 
 public class Controleur {
     public final Dessin dessin = new Dessin();
@@ -20,17 +21,17 @@ public class Controleur {
     public final SimpleObjectProperty<Color> couleur = new SimpleObjectProperty<>(Color.BLACK);
     public final SimpleIntegerProperty epaisseur = new SimpleIntegerProperty(1);
 
-    @FXML public MenusControleur menusControleur;
-    @FXML public StatutControleur statutControleur;
-    @FXML public CouleursControleur couleursControleur;
-    @FXML public DessinControleur dessinControleur;
+    @FXML public MenusControleur menusController;
+    @FXML public StatutControleur statutController;
+    @FXML public CouleursControleur couleursController;
+    @FXML public DessinControleur dessinController;
 
     @FXML
     public void initialize() {
-        if (menusControleur != null) menusControleur.setControleur(this);
-        if (statutControleur != null) statutControleur.setControleur(this);
-        if (couleursControleur != null) couleursControleur.setControleur(this);
-        if (dessinControleur != null) dessinControleur.setControleur(this);
+        if (menusController != null) menusController.setControleur(this);
+        if (statutController != null) statutController.setControleur(this);
+        if (couleursController != null) couleursController.setControleur(this);
+        if (dessinController != null) dessinController.setControleur(this);
     }
 
     public boolean onQuitter() {
@@ -55,19 +56,19 @@ public class Controleur {
     }
 
     public void onMouseDrag(double x, double y) {
-        dessinControleur.trace(precX.get(), precY.get(), x, y);
+        dessinController.trace(precX.get(), precY.get(), x, y);
         figureCourante.addPoint(x, y);
         precX.set(x);
         precY.set(y);
     }
 
     public void dessine() {
-        dessinControleur.efface();
+        dessinController.efface();
         for (Figure figure : dessin.getFigures()) {
             if (figure instanceof Trace) {
                 List<Point> points = figure.getPoints();
                 for (int i = 1; i < points.size(); i++) {
-                    dessinControleur.trace(
+                    dessinController.trace(
                         points.get(i-1).getX(), points.get(i-1).getY(),
                         points.get(i).getX(),   points.get(i).getY()
                     );
