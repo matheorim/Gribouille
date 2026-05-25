@@ -98,4 +98,8 @@ public class Controller implements Initializable {
         prevX.set(evt.getX());
         prevY.set(evt.getY());
     }
+    
+    public boolean onQuitter() {
+        return Dialogues.confirmation();
+    }
 }

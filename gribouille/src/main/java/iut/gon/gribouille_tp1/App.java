@@ -22,7 +22,7 @@ public class App extends Application {
         stage.titleProperty().bind(controleur.dessin.nomDuFichierProperty());
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
-            if (!Dialogues.confirmation()) {
+            if (!controleur.onQuitter()) {
                 event.consume();
             }
         });

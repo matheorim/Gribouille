@@ -23,10 +23,8 @@ public class DessinControleur implements Initializable {
 
     public void setControleur(Controleur controleur) {
         this.controleur = controleur;
- 
-        controleur.dessin.getFigures(); 
-        dessin.widthProperty().addListener((obs, oldVal, newVal) -> redessiner());
-        dessin.heightProperty().addListener((obs, oldVal, newVal) -> redessiner());
+        dessin.widthProperty().addListener((obs, oldVal, newVal) -> controleur.dessine());
+        dessin.heightProperty().addListener((obs, oldVal, newVal) -> controleur.dessine());
     }
 
     @Override
@@ -57,46 +55,32 @@ public class DessinControleur implements Initializable {
         }
     }
 
+    public void efface() {
+        dessin.getGraphicsContext2D().clearRect(0, 0, dessin.getWidth(), dessin.getHeight());
+    }
+
+    public void trace(double x1, double y1, double x2, double y2) {
+        GraphicsContext gc = dessin.getGraphicsContext2D();
+        gc.setStroke(controleur.couleur.get());
+        gc.setLineWidth(controleur.epaisseur.get());
+        gc.strokeLine(x1, y1, x2, y2);
+    }
+    
     @FXML
     public void onMousePressed(MouseEvent evt) {
         if (controleur == null) return;
-        controleur.precX.set(evt.getX());
-        controleur.precY.set(evt.getY());
-
-        javafx.scene.paint.Color c = controleur.couleur.get();
-        String couleurHex = String.format("#%02x%02x%02x",
-            (int) (c.getRed()   * 255),
-            (int) (c.getGreen() * 255),
-            (int) (c.getBlue()  * 255));
-
-        controleur.figureCourante = new Trace(
-            controleur.epaisseur.get(),
-            couleurHex,
-            evt.getX(),
-            evt.getY()
-        );
-        controleur.dessin.addFigure(controleur.figureCourante);
+        controleur.onMousePress(evt.getX(), evt.getY());
     }
 
     @FXML
     public void onMouseDragged(MouseEvent evt) {
         if (controleur == null) return;
-        GraphicsContext gc = dessin.getGraphicsContext2D();
-        gc.setStroke(controleur.couleur.get());
-        gc.setLineWidth(controleur.epaisseur.get());
-        gc.strokeLine(
-            controleur.precX.get(), controleur.precY.get(),
-            evt.getX(), evt.getY()
-        );
-        controleur.figureCourante.addPoint(evt.getX(), evt.getY());
-        controleur.precX.set(evt.getX());
-        controleur.precY.set(evt.getY());
+        controleur.onMouseDrag(evt.getX(), evt.getY());
     }
 
     @FXML
     public void onMouseMoved(MouseEvent evt) {
         if (controleur == null) return;
-        controleur.precX.set(evt.getX());
-        controleur.precY.set(evt.getY());
+        controleur.onMouseMove(evt.getX(), evt.getY());
     }
 }

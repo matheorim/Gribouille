@@ -1,5 +1,7 @@
 package iut.gon.gribouille_tp1.controleurs;
 
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,4 +16,11 @@ public class MenusControleur implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {}
+
+    @FXML
+    public void onQuitte() {
+        if (controleur.onQuitter()) {
+            Platform.exit();
+        }
+    }
 }
