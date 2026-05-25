@@ -4,6 +4,7 @@ import java.util.List;
 
 import iut.gon.gribouille_tp1.Dialogues;
 import iut.gon.gribouille_tp1.modele.Dessin;
+import iut.gon.gribouille_tp1.modele.Etoile;
 import iut.gon.gribouille_tp1.modele.Figure;
 import iut.gon.gribouille_tp1.modele.Point;
 import iut.gon.gribouille_tp1.modele.Trace;
@@ -37,17 +38,13 @@ public class Controleur {
     public boolean onQuitter() {
         return Dialogues.confirmation();
     }
-    
+
+    public Outil outil = new OutilCrayon(this);
+
     public void onMousePress(double x, double y) {
         precX.set(x);
         precY.set(y);
-        javafx.scene.paint.Color c = couleur.get();
-        String couleurHex = String.format("#%02x%02x%02x",
-            (int)(c.getRed()   * 255),
-            (int)(c.getGreen() * 255),
-            (int)(c.getBlue()  * 255));
-        figureCourante = new Trace(epaisseur.get(), couleurHex, x, y);
-        dessin.addFigure(figureCourante);
+        outil.onMousePress(x, y);
     }
 
     public void onMouseMove(double x, double y) {
@@ -56,10 +53,19 @@ public class Controleur {
     }
 
     public void onMouseDrag(double x, double y) {
-        dessinController.trace(precX.get(), precY.get(), x, y);
-        figureCourante.addPoint(x, y);
+        outil.onMouseDrag(x, y);
         precX.set(x);
         precY.set(y);
+    }
+
+    public void onCrayon() {
+        outil = new OutilCrayon(this);
+        statutController.labelOutil.setText("Crayon");
+    }
+
+    public void onEtoile() {
+        outil = new OutilEtoile(this);
+        statutController.labelOutil.setText("Étoile");
     }
 
     public void dessine() {
@@ -70,7 +76,15 @@ public class Controleur {
                 for (int i = 1; i < points.size(); i++) {
                     dessinController.trace(
                         points.get(i-1).getX(), points.get(i-1).getY(),
-                        points.get(i).getX(),   points.get(i).getY()
+                        points.get(i).getX(), points.get(i).getY()
+                    );
+                }
+            } else if (figure instanceof Etoile) {
+                Etoile etoile = (Etoile) figure;
+                for (Point p : etoile.getPoints()) {
+                    dessinController.trace(
+                        etoile.getCentre().getX(), etoile.getCentre().getY(),
+                        p.getX(), p.getY()
                     );
                 }
             }

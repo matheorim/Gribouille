@@ -31,11 +31,13 @@
             <RadioMenuItem mnemonicParsing="false" text="9" toggleGroup="$épaisseur" />
           </items>
         </Menu>
-        <RadioMenuItem mnemonicParsing="false" text="Crayon">
-          <toggleGroup><ToggleGroup fx:id="outils" /></toggleGroup>
-        </RadioMenuItem>
-        <RadioMenuItem mnemonicParsing="false" text="Étoile" toggleGroup="$outils" />
-      </items>
+        <RadioMenuItem fx:id="menuCrayon" mnemonicParsing="false" text="Crayon">
+  <toggleGroup>
+    <ToggleGroup fx:id="outils" />
+  </toggleGroup>
+</RadioMenuItem>
+<RadioMenuItem fx:id="menuEtoile" mnemonicParsing="false" text="Étoile" toggleGroup="$outils" />
+      </items>	
     </Menu>
     <Menu mnemonicParsing="false" text="Aide">
       <items>
