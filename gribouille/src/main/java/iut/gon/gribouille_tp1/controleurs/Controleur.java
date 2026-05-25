@@ -90,4 +90,9 @@ public class Controleur {
             }
         }
     }
+    public void setEpaisseur(int e) {
+        System.out.println("setEpaisseur appelé avec " + e);
+        epaisseur.set(e);
+        dessinController.setEpaisseur(e);
+    }
 }

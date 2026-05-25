@@ -83,4 +83,7 @@ public class DessinControleur implements Initializable {
         if (controleur == null) return;
         controleur.onMouseMove(evt.getX(), evt.getY());
     }
+    public void setEpaisseur(int e) {
+        dessin.getGraphicsContext2D().setLineWidth(e);
+    }
 }

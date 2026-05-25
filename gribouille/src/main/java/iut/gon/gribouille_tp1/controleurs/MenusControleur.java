@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,20 +15,24 @@ public class MenusControleur implements Initializable {
     @FXML public RadioMenuItem menuCrayon;
     @FXML public RadioMenuItem menuEtoile;
     @FXML public ToggleGroup outils;
+    @FXML public ToggleGroup epaisseur;
 
     public void setControleur(Controleur controleur) {
         this.controleur = controleur;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
         outils.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal == menuCrayon) {
-                controleur.onCrayon();
-            } else if (newVal == menuEtoile) {
-                controleur.onEtoile();
+            if (newVal == menuCrayon) controleur.onCrayon();
+            else if (newVal == menuEtoile) controleur.onEtoile();
+        });
+
+        epaisseur.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                RadioMenuItem item = (RadioMenuItem) newVal;
+                controleur.setEpaisseur(Integer.parseInt(item.getText()));
             }
         });
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     @FXML
