@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox xmlns="http://javafx.com/javafx/25"
+<VBox fx:id="vbox" xmlns="http://javafx.com/javafx/25"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="iut.gon.gribouille_tp1.controleurs.CouleursControleur"
       prefHeight="283.0" prefWidth="107.0">
