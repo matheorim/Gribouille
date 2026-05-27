@@ -60,14 +60,20 @@ public class Controleur {
 
     public void onCrayon() {
         outil = new OutilCrayon(this);
+        if (figureCourante != null) {
+            outil.onMousePress(precX.get(), precY.get());
+        }
         statutController.labelOutil.setText("Crayon");
     }
 
     public void onEtoile() {
         outil = new OutilEtoile(this);
+        if (figureCourante != null) {
+            outil.onMousePress(precX.get(), precY.get());
+        }
         statutController.labelOutil.setText("Étoile");
     }
-
+    
     public void dessine() {
         dessinController.efface();
         for (Figure figure : dessin.getFigures()) {
@@ -92,16 +98,29 @@ public class Controleur {
     }
     
     public void setEpaisseur(int e) {
-        System.out.println("setEpaisseur appelé avec " + e);
         epaisseur.set(e);
-        dessinController.setEpaisseur(e);
-    }
-    
+        dessinController.setEpaisseur(e);        if (figureCourante != null) {
+            Figure nouvelleFigure = figureCourante.changeEpaisseur(e);
+            dessin.addFigure(nouvelleFigure);
+            figureCourante = nouvelleFigure;
+            outil.setFigureCourante(nouvelleFigure);
+        }
+    }    
     public void setCouleur(Color c) {
         couleur.set(c);
         dessinController.setCouleur(c);
-    }
-    
+        if (figureCourante != null) {
+            Figure nouvelleFigure = figureCourante.changeCouleur(
+                String.format("#%02x%02x%02x",
+                    (int)(c.getRed()   * 255),
+                    (int)(c.getGreen() * 255),
+                    (int)(c.getBlue()  * 255))
+            );
+            dessin.addFigure(nouvelleFigure);
+            figureCourante = nouvelleFigure;
+            outil.setFigureCourante(nouvelleFigure);
+        }
+    }    
     public void onKeyPressed(String text) {
         switch (text) {
             case "1": setEpaisseur(1); break;

@@ -9,4 +9,5 @@ public abstract class Outil {
 
     public abstract void onMousePress(double x, double y);
     public abstract void onMouseDrag(double x, double y);
+    public abstract void setFigureCourante(iut.gon.gribouille_tp1.modele.Figure figure);
 }

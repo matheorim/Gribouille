@@ -1,6 +1,7 @@
 package iut.gon.gribouille_tp1.controleurs;
 
 import iut.gon.gribouille_tp1.modele.Etoile;
+import iut.gon.gribouille_tp1.modele.Figure;
 
 public class OutilEtoile extends Outil {
     public OutilEtoile(Controleur controleur) {
@@ -27,5 +28,9 @@ public class OutilEtoile extends Outil {
             x, y
         );
         etoile.addPoint(x, y);
+    }
+
+    @Override
+    public void setFigureCourante(Figure figure) {
     }
 }

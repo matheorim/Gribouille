@@ -1,5 +1,6 @@
 package iut.gon.gribouille_tp1.controleurs;
 
+import iut.gon.gribouille_tp1.modele.Figure;
 import iut.gon.gribouille_tp1.modele.Trace;
 
 public class OutilCrayon extends Outil {
@@ -25,5 +26,12 @@ public class OutilCrayon extends Outil {
     public void onMouseDrag(double x, double y) {
         controleur.dessinController.trace(controleur.precX.get(), controleur.precY.get(), x, y);
         traceEnCours.addPoint(x, y);
+    }
+
+    @Override
+    public void setFigureCourante(Figure figure) {
+        if (figure instanceof Trace) {
+            traceEnCours = (Trace) figure;
+        }
     }
 }
