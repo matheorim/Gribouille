@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 
 public class App extends Application {
@@ -19,6 +21,9 @@ public class App extends Application {
 
         Controleur controleur = loader.getController();
 
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, evt -> {
+            controleur.onKeyPressed(evt.getText());
+        });
         stage.titleProperty().bind(controleur.dessin.nomDuFichierProperty());
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> {

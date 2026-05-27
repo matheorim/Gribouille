@@ -9,7 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
+import javafx.scene.paint.Color;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -83,4 +83,13 @@ public class DessinControleur implements Initializable {
         if (controleur == null) return;
         controleur.onMouseMove(evt.getX(), evt.getY());
     }
+    
+    public void setEpaisseur(int e) {
+        dessin.getGraphicsContext2D().setLineWidth(e);
+    }
+    
+    public void setCouleur(Color c) {
+        dessin.getGraphicsContext2D().setStroke(c);
+    }
+    
 }

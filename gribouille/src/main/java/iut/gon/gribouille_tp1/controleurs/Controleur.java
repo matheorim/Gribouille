@@ -60,14 +60,20 @@ public class Controleur {
 
     public void onCrayon() {
         outil = new OutilCrayon(this);
+        if (figureCourante != null) {
+            outil.onMousePress(precX.get(), precY.get());
+        }
         statutController.labelOutil.setText("Crayon");
     }
 
     public void onEtoile() {
         outil = new OutilEtoile(this);
+        if (figureCourante != null) {
+            outil.onMousePress(precX.get(), precY.get());
+        }
         statutController.labelOutil.setText("Étoile");
     }
-
+    
     public void dessine() {
         dessinController.efface();
         for (Figure figure : dessin.getFigures()) {
@@ -88,6 +94,53 @@ public class Controleur {
                     );
                 }
             }
+        }
+    }
+    
+    public void setEpaisseur(int e) {
+        epaisseur.set(e);
+        dessinController.setEpaisseur(e);        if (figureCourante != null) {
+            Figure nouvelleFigure = figureCourante.changeEpaisseur(e);
+            dessin.addFigure(nouvelleFigure);
+            figureCourante = nouvelleFigure;
+            outil.setFigureCourante(nouvelleFigure);
+        }
+    }    
+    public void setCouleur(Color c) {
+        couleur.set(c);
+        dessinController.setCouleur(c);
+        if (figureCourante != null) {
+            Figure nouvelleFigure = figureCourante.changeCouleur(
+                String.format("#%02x%02x%02x",
+                    (int)(c.getRed()   * 255),
+                    (int)(c.getGreen() * 255),
+                    (int)(c.getBlue()  * 255))
+            );
+            dessin.addFigure(nouvelleFigure);
+            figureCourante = nouvelleFigure;
+            outil.setFigureCourante(nouvelleFigure);
+        }
+    }    
+    public void onKeyPressed(String text) {
+        switch (text) {
+            case "1": setEpaisseur(1); break;
+            case "2": setEpaisseur(2); break;
+            case "3": setEpaisseur(3); break;
+            case "4": setEpaisseur(4); break;
+            case "5": setEpaisseur(5); break;
+            case "6": setEpaisseur(6); break;
+            case "7": setEpaisseur(7); break;
+            case "8": setEpaisseur(8); break;
+            case "9": setEpaisseur(9); break;
+
+            case "c": onCrayon(); break;
+            case "e": onEtoile(); break;
+
+            case "r": setCouleur(javafx.scene.paint.Color.RED); break;
+            case "v": setCouleur(javafx.scene.paint.Color.GREEN); break;
+            case "b": setCouleur(javafx.scene.paint.Color.BLUE); break;
+            case "n": setCouleur(javafx.scene.paint.Color.BLACK); break;
+            case "w": setCouleur(javafx.scene.paint.Color.WHITE); break;
         }
     }
 }
