@@ -1,5 +1,6 @@
 package iut.gon.gribouille_tp1.controleurs;
 
+import java.io.File;
 import java.util.List;
 
 import iut.gon.gribouille_tp1.Dialogues;
@@ -13,6 +14,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
+import javafx.stage.FileChooser;
+import java.io.File;
 
 public class Controleur {
     public final Dessin dessin = new Dessin();
@@ -146,6 +149,17 @@ public class Controleur {
             case "b": setCouleur(javafx.scene.paint.Color.BLUE); break;
             case "n": setCouleur(javafx.scene.paint.Color.BLACK); break;
             case "w": setCouleur(javafx.scene.paint.Color.WHITE); break;
+        }
+    }
+    public void sauvegarde() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sauvegarder le dessin");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Fichiers dessin", "*.grib")
+        );
+        File fichier = fileChooser.showSaveDialog(null);
+        if (fichier != null) {
+            dessin.sauveSous(fichier.getAbsolutePath());
         }
     }
 }
