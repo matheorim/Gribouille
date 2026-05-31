@@ -1,6 +1,7 @@
 package iut.gon.gribouille_tp1.controleurs;
 
 import java.util.List;
+import java.util.Optional;
 
 import iut.gon.gribouille_tp1.Dialogues;
 import iut.gon.gribouille_tp1.modele.Dessin;
@@ -12,7 +13,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.application.Platform;
+import javafx.stage.FileChooser;
+import java.io.File;
 
 public class Controleur {
     public final Dessin dessin = new Dessin();
@@ -36,7 +42,35 @@ public class Controleur {
     }
 
     public boolean onQuitter() {
-        return Dialogues.confirmation();
+        if (!dessin.getEstModifie()) {
+            return true;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Quitter");
+        alert.setHeaderText("Le dessin a été modifié");
+        alert.setContentText("Voulez-vous sauvegarder avant de quitter ?");
+
+        ButtonType sauvegarderBtn = new ButtonType("Sauvegarder");
+        ButtonType sansSauvegarderBtn = new ButtonType("Ne pas sauvegarder");
+        ButtonType annulerBtn = new ButtonType("Annuler", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(sauvegarderBtn, sansSauvegarderBtn, annulerBtn);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(annulerBtn) == sauvegarderBtn) {
+            try {
+                sauvegarde();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else if (result.orElse(annulerBtn) == sansSauvegarderBtn) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Outil outil = new OutilCrayon(this);
@@ -77,6 +111,9 @@ public class Controleur {
     public void dessine() {
         dessinController.efface();
         for (Figure figure : dessin.getFigures()) {
+            dessinController.setCouleur(Color.web(figure.getCouleur()));
+            dessinController.setEpaisseur(figure.getEpaisseur());
+
             if (figure instanceof Trace) {
                 List<Point> points = figure.getPoints();
                 for (int i = 1; i < points.size(); i++) {
@@ -95,6 +132,8 @@ public class Controleur {
                 }
             }
         }
+        dessinController.setCouleur(couleur.get());
+        dessinController.setEpaisseur(epaisseur.get());
     }
     
     public void setEpaisseur(int e) {
@@ -141,6 +180,29 @@ public class Controleur {
             case "b": setCouleur(javafx.scene.paint.Color.BLUE); break;
             case "n": setCouleur(javafx.scene.paint.Color.BLACK); break;
             case "w": setCouleur(javafx.scene.paint.Color.WHITE); break;
+        }
+    }
+    public void sauvegarde() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sauvegarder le dessin");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Fichiers dessin", "*.grib")
+        );
+        File fichier = fileChooser.showSaveDialog(null);
+        if (fichier != null) {
+            dessin.sauveSous(fichier.getAbsolutePath());
+        }
+    }
+    public void charge() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Charger un dessin");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Fichiers dessin", "*.grib")
+        );
+        File fichier = fileChooser.showOpenDialog(null);
+        if (fichier != null) {
+            dessin.charge(fichier.getAbsolutePath());
+            dessine();
         }
     }
 }

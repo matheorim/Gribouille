@@ -5,11 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenusControleur implements Initializable {
-
     public Controleur controleur;
 
     @FXML public RadioMenuItem menuCrayon;
@@ -23,7 +25,6 @@ public class MenusControleur implements Initializable {
             if (newVal == menuCrayon) controleur.onCrayon();
             else if (newVal == menuEtoile) controleur.onEtoile();
         });
-
         epaisseur.selectedToggleProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 RadioMenuItem item = (RadioMenuItem) newVal;
@@ -31,8 +32,13 @@ public class MenusControleur implements Initializable {
             }
         });
     }
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
+
+    @FXML
+    public void onSauvegarder() {
+        controleur.sauvegarde();
     }
 
     @FXML
@@ -40,5 +46,9 @@ public class MenusControleur implements Initializable {
         if (controleur.onQuitter()) {
             Platform.exit();
         }
+    }
+    @FXML
+    public void onCharger() {
+        controleur.charge();
     }
 }

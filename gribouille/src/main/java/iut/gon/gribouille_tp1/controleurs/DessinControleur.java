@@ -61,8 +61,6 @@ public class DessinControleur implements Initializable {
 
     public void trace(double x1, double y1, double x2, double y2) {
         GraphicsContext gc = dessin.getGraphicsContext2D();
-        gc.setStroke(controleur.couleur.get());
-        gc.setLineWidth(controleur.epaisseur.get());
         gc.strokeLine(x1, y1, x2, y2);
     }
     
