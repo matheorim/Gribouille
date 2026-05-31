@@ -1,6 +1,7 @@
 package iut.gon.gribouille_tp1.controleurs;
 
 import java.util.List;
+import java.util.Optional;
 
 import iut.gon.gribouille_tp1.Dialogues;
 import iut.gon.gribouille_tp1.modele.Dessin;
@@ -12,6 +13,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.application.Platform;
 import javafx.stage.FileChooser;
 import java.io.File;
@@ -38,7 +42,35 @@ public class Controleur {
     }
 
     public boolean onQuitter() {
-        return Dialogues.confirmation();
+        if (!dessin.getEstModifie()) {
+            return true;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Quitter");
+        alert.setHeaderText("Le dessin a été modifié");
+        alert.setContentText("Voulez-vous sauvegarder avant de quitter ?");
+
+        ButtonType sauvegarderBtn = new ButtonType("Sauvegarder");
+        ButtonType sansSauvegarderBtn = new ButtonType("Ne pas sauvegarder");
+        ButtonType annulerBtn = new ButtonType("Annuler", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(sauvegarderBtn, sansSauvegarderBtn, annulerBtn);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.orElse(annulerBtn) == sauvegarderBtn) {
+            try {
+                sauvegarde();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else if (result.orElse(annulerBtn) == sansSauvegarderBtn) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Outil outil = new OutilCrayon(this);
