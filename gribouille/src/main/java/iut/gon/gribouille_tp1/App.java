@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 
+import javafx.beans.binding.Bindings;
+
 public class App extends Application {
 
     private static Scene scene;
@@ -24,8 +26,14 @@ public class App extends Application {
         stage.addEventHandler(KeyEvent.KEY_PRESSED, evt -> {
             controleur.onKeyPressed(evt.getText());
         });
-        stage.titleProperty().bind(controleur.dessin.nomDuFichierProperty());
-        stage.setScene(scene);
+        stage.titleProperty().bind(
+        	    Bindings.concat(
+        	        controleur.dessin.nomDuFichierProperty(),
+        	        Bindings.when(controleur.dessin.estModifieProperty())
+        	            .then(" *")
+        	            .otherwise("")
+        	    )
+        	);        stage.setScene(scene);
         stage.setOnCloseRequest(event -> {
             if (!controleur.onQuitter()) {
                 event.consume();
