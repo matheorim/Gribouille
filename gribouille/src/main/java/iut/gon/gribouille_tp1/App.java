@@ -52,6 +52,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        java.util.Locale.setDefault(java.util.Locale.ENGLISH);
         launch(args);
     }
 }

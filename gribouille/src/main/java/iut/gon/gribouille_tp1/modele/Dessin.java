@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -48,6 +49,7 @@ public class Dessin {
         try {
             File nouveauFichier = new File(nom);
             PrintWriter out = new PrintWriter(nouveauFichier);
+            out.format(java.util.Locale.ENGLISH, "");
             figures.forEach(f -> f.sauve(out));
             out.close();
             this.fichier.set(nouveauFichier);
@@ -63,6 +65,7 @@ public class Dessin {
             figures.clear();
             try {
                 Scanner scanner = new Scanner(nouveauFichier);
+                scanner.useLocale(java.util.Locale.ENGLISH);
                 while (scanner.hasNextLine()) {
                     String ligne = scanner.nextLine();
                     if (!ligne.isBlank())
@@ -78,3 +81,4 @@ public class Dessin {
         }
     }
 }
+  

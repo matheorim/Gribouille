@@ -1,6 +1,5 @@
 package iut.gon.gribouille_tp1.controleurs;
 
-import java.io.File;
 import java.util.List;
 
 import iut.gon.gribouille_tp1.Dialogues;
@@ -160,6 +159,18 @@ public class Controleur {
         File fichier = fileChooser.showSaveDialog(null);
         if (fichier != null) {
             dessin.sauveSous(fichier.getAbsolutePath());
+        }
+    }
+    public void charge() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Charger un dessin");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Fichiers dessin", "*.grib")
+        );
+        File fichier = fileChooser.showOpenDialog(null);
+        if (fichier != null) {
+            dessin.charge(fichier.getAbsolutePath());
+            dessine();
         }
     }
 }

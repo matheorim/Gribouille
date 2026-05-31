@@ -47,4 +47,8 @@ public class MenusControleur implements Initializable {
             Platform.exit();
         }
     }
+    @FXML
+    public void onCharger() {
+        controleur.charge();
+    }
 }

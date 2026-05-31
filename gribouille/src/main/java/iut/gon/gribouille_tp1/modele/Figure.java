@@ -16,6 +16,7 @@ public abstract class Figure {
     }
 
     public Figure(Scanner scan) {
+        scan.useLocale(java.util.Locale.ENGLISH);
         epaisseur = scan.nextInt();
         couleur = scan.next();
         points = new ArrayList<>();
@@ -30,10 +31,11 @@ public abstract class Figure {
 
     public static Figure charge(String line) {
         Scanner scan = new Scanner(line);
+        scan.useLocale(java.util.Locale.ENGLISH);
         switch (scan.next()) {
             case "T": return new Trace(scan);
             case "E": return new Etoile(scan);
-            default: throw new IllegalArgumentException("Type de figure inconnu");
+            default: throw new IllegalArgumentException("Type de figure inconnu : " + line);
         }
     }
 
