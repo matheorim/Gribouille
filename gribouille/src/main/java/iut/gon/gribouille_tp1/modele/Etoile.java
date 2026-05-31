@@ -1,35 +1,39 @@
 package iut.gon.gribouille_tp1.modele;
 
-/**
- Stocke une Figure "Etoile"
- */
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Etoile extends Figure {
-  /**
-   Le point central de l'étoile
-   */
-  private Point centre;
+    private Point centre;
 
-  /**
-   Crée une étoile avec une épaisseur, une couleur et un centre
-   */
-  public Etoile(int epaisseur, String couleur, double xc, double yc) {
-    super(epaisseur, couleur);
-    centre = new Point(xc, yc);
-  }
+    public Etoile(int epaisseur, String couleur, double xc, double yc) {
+        super(epaisseur, couleur);
+        centre = new Point(xc, yc);
+    }
 
-  /**
-   Retourne le point central de l'étoile
-   */
-  public Point getCentre() {
-    return centre;
-  }
+    Etoile(Scanner scan) {
+        super(scan);
+        double x = scan.nextDouble();
+        double y = scan.nextDouble();
+        centre = new Point(x, y);
+    }
 
-  public Figure changeCouleur(String nouvelleCouleur) {
-    return new Etoile(epaisseur, nouvelleCouleur, centre.getX(), centre.getY());
-  }
+    @Override
+    public void sauve(PrintWriter out) {
+        out.print("E ");
+        super.sauve(out);
+        out.printf("%.1f %.1f\n", centre.getX(), centre.getY());
+    }
 
-  public Figure changeEpaisseur(int nouvelleEpaisseur) {
-    return new Etoile(nouvelleEpaisseur, couleur, centre.getX(), centre.getY());
-  }
+    public Point getCentre() { return centre; }
 
+    @Override
+    public Figure changeCouleur(String nouvelleCouleur) {
+        return new Etoile(epaisseur, nouvelleCouleur, centre.getX(), centre.getY());
+    }
+
+    @Override
+    public Figure changeEpaisseur(int nouvelleEpaisseur) {
+        return new Etoile(nouvelleEpaisseur, couleur, centre.getX(), centre.getY());
+    }
 }

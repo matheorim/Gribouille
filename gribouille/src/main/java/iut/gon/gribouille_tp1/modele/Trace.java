@@ -1,5 +1,7 @@
 package iut.gon.gribouille_tp1.modele;
 
+import java.util.Scanner;
+
 /**
  Stocke une figure "Trace"
  */
@@ -12,6 +14,11 @@ public class Trace extends Figure {
     super(epaisseur, couleur);
     points.add(new Point(x0, y0));
   }
+  
+  public Trace(Scanner scan) {
+	    super(scan);
+	  }
+
 
   @Override
   public String toString() {

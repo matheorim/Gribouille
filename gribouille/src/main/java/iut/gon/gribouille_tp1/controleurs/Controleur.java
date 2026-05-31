@@ -77,6 +77,9 @@ public class Controleur {
     public void dessine() {
         dessinController.efface();
         for (Figure figure : dessin.getFigures()) {
+            dessinController.setCouleur(Color.web(figure.getCouleur()));
+            dessinController.setEpaisseur(figure.getEpaisseur());
+
             if (figure instanceof Trace) {
                 List<Point> points = figure.getPoints();
                 for (int i = 1; i < points.size(); i++) {
@@ -95,6 +98,8 @@ public class Controleur {
                 }
             }
         }
+        dessinController.setCouleur(couleur.get());
+        dessinController.setEpaisseur(epaisseur.get());
     }
     
     public void setEpaisseur(int e) {
