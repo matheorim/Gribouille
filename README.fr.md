@@ -1,5 +1,7 @@
 # Gribouille
 
+🇬🇧 [English version](README.md)
+
 Application de dessin en **JavaFX** réalisée dans le cadre des travaux pratiques de l'IUT (TP1 à TP6). Gribouille permet de dessiner à main levée avec un crayon, d'ajouter des étoiles, de choisir ses couleurs et de gérer son dessin depuis une interface graphique.
 
 ## Fonctionnalités
